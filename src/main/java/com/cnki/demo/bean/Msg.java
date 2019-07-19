@@ -40,4 +40,5 @@ public class Msg {
         this.content = content;
         this.extraInfo = extraInfo;
     }
+    //git 测试
 }
