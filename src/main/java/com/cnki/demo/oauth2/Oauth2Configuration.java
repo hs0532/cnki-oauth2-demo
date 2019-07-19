@@ -14,7 +14,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import com.cnki.demo.service.MyRedisTokenStore;
 
@@ -36,7 +35,6 @@ public class Oauth2Configuration extends ResourceServerConfigurerAdapter {
             .antMatchers("/api/**").authenticated();
 		}
 	}
-
 	@Configuration
 	@EnableAuthorizationServer
 	protected static class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
@@ -57,9 +55,7 @@ public class Oauth2Configuration extends ResourceServerConfigurerAdapter {
             .resourceIds("oauth2-resource")
             .accessTokenValiditySeconds(1200)
             .refreshTokenValiditySeconds(50000);
-
 		}
-
 		@Override
 		public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 			endpoints.tokenStore( new MyRedisTokenStore(redisConnectionFactory) ) //  Redis 存储oauth 的token和一些令牌信息
@@ -67,6 +63,7 @@ public class Oauth2Configuration extends ResourceServerConfigurerAdapter {
 					.authenticationManager(authenticationManager).allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
 		}
 
+		
 		@Override
 		public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
 			oauthServer.realm("oauth2-resources") // code授权添加
