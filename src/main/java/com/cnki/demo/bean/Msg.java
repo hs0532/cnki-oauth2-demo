@@ -41,4 +41,5 @@ public class Msg {
         this.extraInfo = extraInfo;
     }
     //git 测试
+    //git 合并分支测试
 }
